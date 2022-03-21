@@ -43,6 +43,30 @@ impl ImageObject {
   }
 }
 
+pub trait HasId {
+  fn id(&self) -> &Url;
+}
+
+/// Object references can either be a link or the whole object content
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(untagged)]
+pub enum IdOrNestedObject<NestedObject> {
+  Id(Url),
+  NestedObject(NestedObject),
+}
+
+impl<NestedObject> HasId for IdOrNestedObject<NestedObject>
+where
+  NestedObject: HasId,
+{
+  fn id(&self) -> &Url {
+    match self {
+      IdOrNestedObject::Id(i) => i,
+      IdOrNestedObject::NestedObject(n) => n.id(),
+    }
+  }
+}
+
 #[derive(Clone, Debug, Default, serde::Deserialize, serde::Serialize)]
 #[serde(transparent)]
 pub struct Unparsed(HashMap<String, serde_json::Value>);

@@ -15,7 +15,10 @@ use crate::{
     post::ApubPost,
     private_message::ApubPrivateMessage,
   },
-  protocol::activities::deletion::{delete::Delete, undo_delete::UndoDelete},
+  protocol::{
+    activities::deletion::{delete::Delete, undo_delete::UndoDelete},
+    HasId,
+  },
 };
 use activitystreams_kinds::public;
 use lemmy_api_common::blocking;

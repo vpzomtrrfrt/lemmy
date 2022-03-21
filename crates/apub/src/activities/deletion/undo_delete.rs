@@ -6,7 +6,10 @@ use crate::{
     verify_activity,
   },
   objects::community::ApubCommunity,
-  protocol::activities::deletion::{delete::Delete, undo_delete::UndoDelete},
+  protocol::{
+    activities::deletion::{delete::Delete, undo_delete::UndoDelete},
+    HasId,
+  },
 };
 use activitystreams_kinds::activity::UndoType;
 use lemmy_api_common::blocking;

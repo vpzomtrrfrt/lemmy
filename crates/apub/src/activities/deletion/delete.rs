@@ -6,7 +6,11 @@ use crate::{
     verify_activity,
   },
   objects::{community::ApubCommunity, person::ApubPerson},
-  protocol::activities::deletion::delete::{Delete, IdOrNestedObject, NestedObject},
+  protocol::{
+    activities::deletion::delete::{Delete, MinimalTombstone},
+    HasId,
+    IdOrNestedObject,
+  },
 };
 use activitystreams_kinds::activity::DeleteType;
 use anyhow::anyhow;
@@ -104,7 +108,7 @@ impl Delete {
     Ok(Delete {
       actor: ObjectId::new(actor.actor_id.clone()),
       to: vec![to],
-      object: IdOrNestedObject::NestedObject(NestedObject {
+      object: IdOrNestedObject::NestedObject(MinimalTombstone {
         id: object.id(),
         kind: Default::default(),
       }),
